@@ -1,18 +1,35 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Mosaic</h1>
+    <div class="mosaic-comp">
+      <Mosaic />
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import Mosaic from '@/components/Mosaic.vue';
 
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld,
+    Mosaic,
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "../scss/variables";
+
+h1 {
+  width:  100px;
+  position: absolute;
+  top: 1vw;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: $gradient_1;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+</style>
