@@ -1,19 +1,47 @@
 <template>
   <div class="mosaicComp">
+    <img :src="images[randomNumber].path" alt="image" class="img" />
     <div class="mosaic__wrapper">
-      <div class="mosaic__square locked" v-for="i in 9" :key="i">
+      <div
+        class="mosaic__square mosaic__square--hover locked"
+        v-for="i in 36"
+        :key="i"
+      >
         <div class="mosaic__square--icon">
           <mdicon class="icon" name="eye" size="50" />
         </div>
       </div>
     </div>
   </div>
+  <Input class="mosaic__input" :image="images[randomNumber].path" />
 </template>
 
-<script>
-export default {
-  name: 'MosaicComp',
+<script setup>
+import { onMounted, ref } from 'vue';
+import Input from './Input.vue';
+
+const images = ref([
+  {
+    path: '../img/1.jpg',
+  },
+  {
+    path: '../img/2.jpg',
+  },
+]);
+const randomNumber = Math.floor(Math.random() * images.value.length);
+const listenClick = () => {
+  const squares = document.querySelectorAll('.mosaic__square');
+  squares.forEach((square) => {
+    square.addEventListener('click', () => {
+      square.classList.remove('locked');
+      square.classList.remove('mosaic__square--hover');
+      square.classList.add('unlocked');
+    });
+  });
 };
+onMounted(() => {
+  listenClick();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -26,13 +54,13 @@ export default {
 }
 .mosaicComp {
   border-radius: 20px;
-  width: 35vw;
-  height: 35vw;
+  width: $mosaicSide;
+  height: $mosaicSide;
   position: fixed;
   top: 24vw;
   left: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 0px 0px 2px white, 0px 0px 10px #ff00ea, 0px 0px 20px rgb(25, 124, 131);
+  box-shadow: 0px 0px 20px white, 5px 5px 10px #ff00ea, -5px -5px 10px cyan;
 }
 
 .mosaic__wrapper {
@@ -41,45 +69,55 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 20px;
-  width: 35vw;
-  height: 35vw;
+  width: $mosaicSide;
+  height: $mosaicSide;
   display: grid;
   box-shadow: 0px 0px 5px black;
-  grid-template-columns: repeat(3, 1fr);
-  background-image: url("../assets/logo.png");
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 20px;
+  height: $mosaicSide;
+  width: $mosaicSide;
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
 }
 
 .mosaic__square {
   position: relative;
   transition: all 0.5s ease-in;
   opacity: 1;
+  background: white;
   margin: 0px;
-  border: 1px solid #202020;
   width: 100%;
   height: 100%;
   cursor: pointer;
-  background: white;
-  box-shadow: 0px 0px 5px pink;
+  box-shadow: 0px 4px 10px pink, 2px 0px 5px cyan, 0px 3px 7px rgb(195, 0, 255);
 
   &:nth-child(1) {
     border-radius: 20px 0px 0px 0px;
   }
-  &:nth-child(3) {
+  &:nth-child(6) {
     border-radius: 0px 20px 0px 0px;
   }
-  &:nth-child(7) {
+  &:nth-child(31) {
     border-radius: 0px 0px 0px 20px;
   }
-  &:nth-child(9) {
+  &:nth-child(36) {
     border-radius: 0px 0px 20px 0px;
   }
 
+}
+
+.mosaic__square--hover {
   &:hover {
     background: white;
-    box-shadow: inset 0px 0px 10px #000000, inset 0px 0px 20px rgb(200, 178, 207),
-      inset 0px 0px 30px #b6b19a;
+    box-shadow: inset 3px 2px 5px #00ffea, inset 5px 0px 8px rgba(195, 0, 255, 0.678);
 
     .mosaic__square--icon,
     .icon {
@@ -90,7 +128,8 @@ export default {
 
 .locked {
   transition: all 0.2s ease-in;
-  background: white;
+  background: #ffffff;
+  opacity: 1;
 }
 
 .unlocked {
@@ -105,5 +144,12 @@ export default {
   transform: translate(-50%, -50%);
   color: black;
   opacity: 0;
+}
+
+.mosaic__input {
+  position: fixed;
+  bottom: 1vw;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

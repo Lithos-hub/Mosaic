@@ -42,7 +42,7 @@ body {
     background: #1b0417;
   }
   25% {
-    background: #061103;
+    background: #0c0311;
   }
   50% {
     background: #011612;

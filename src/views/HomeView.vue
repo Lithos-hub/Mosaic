@@ -22,10 +22,11 @@ export default {
 @import "../scss/variables";
 
 h1 {
-  width:  100px;
+  width:  auto;
   position: absolute;
   top: 1vw;
   left: 50%;
+  font-size: 3em;
   transform: translate(-50%, -50%);
   background: $gradient_1;
   background-clip: text;
