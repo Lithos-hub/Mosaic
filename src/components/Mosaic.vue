@@ -2,23 +2,28 @@
   <div class="mosaicComp">
     <img :src="images[randomNumber].path" alt="image" class="img" />
     <div class="mosaic__wrapper">
-      <div
-        class="mosaic__square mosaic__square--hover locked"
-        v-for="i in 36"
-        :key="i"
-      >
+      <div class="mosaic__square mosaic__square--hover locked" v-for="i in 36" :key="i">
         <div class="mosaic__square--icon">
           <mdicon class="icon" name="eye" size="50" />
         </div>
       </div>
     </div>
   </div>
-  <Input class="mosaic__input" :image="images[randomNumber].path" />
+  <Input
+    class="mosaic__input"
+    :image="images[randomNumber].path"
+    :model="inputModel"
+    :key="inputKey"
+  />
+  <Keyboard class="keyboardComp" @write-key="writeKey" />
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue';
+import Keyboard from './Keyboard.vue';
 import Input from './Input.vue';
+
+const inputKey = ref(1);
 
 const images = ref([
   {
@@ -28,6 +33,7 @@ const images = ref([
     path: '../img/2.jpg',
   },
 ]);
+const inputModel = ref('');
 const randomNumber = Math.floor(Math.random() * images.value.length);
 const listenClick = () => {
   const squares = document.querySelectorAll('.mosaic__square');
@@ -38,6 +44,10 @@ const listenClick = () => {
       square.classList.add('unlocked');
     });
   });
+};
+const writeKey = (key) => {
+  inputModel.value += key;
+  inputKey.value += 1;
 };
 onMounted(() => {
   listenClick();
@@ -57,10 +67,10 @@ onMounted(() => {
   width: $mosaicSide;
   height: $mosaicSide;
   position: fixed;
-  top: 24vw;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 0px 0px 20px white, 5px 5px 10px #ff00ea, -5px -5px 10px cyan;
+  border: 10px solid $mainDark;
 }
 
 .mosaic__wrapper {
@@ -68,11 +78,11 @@ onMounted(() => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 20px;
+  border-radius: 25px;
   width: $mosaicSide;
   height: $mosaicSide;
   display: grid;
-  box-shadow: 0px 0px 5px black;
+  border: 10px solid $mainDark;
   grid-template-columns: repeat(6, 1fr);
 }
 
@@ -80,7 +90,6 @@ onMounted(() => {
   position: absolute;
   top: 0;
   left: 0;
-  border-radius: 20px;
   height: $mosaicSide;
   width: $mosaicSide;
   background-size: cover;
@@ -97,27 +106,25 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   cursor: pointer;
-  box-shadow: 0px 4px 10px pink, 2px 0px 5px cyan, 0px 3px 7px rgb(195, 0, 255);
+  border: 1px solid $mainDark;
 
   &:nth-child(1) {
-    border-radius: 20px 0px 0px 0px;
+    border-radius: 15px 0px 0px 0px;
   }
   &:nth-child(6) {
-    border-radius: 0px 20px 0px 0px;
+    border-radius: 0px 15px 0px 0px;
   }
   &:nth-child(31) {
-    border-radius: 0px 0px 0px 20px;
+    border-radius: 0px 0px 0px 15px;
   }
   &:nth-child(36) {
-    border-radius: 0px 0px 20px 0px;
+    border-radius: 0px 0px 15px 0px;
   }
-
 }
 
 .mosaic__square--hover {
   &:hover {
     background: white;
-    box-shadow: inset 3px 2px 5px #00ffea, inset 5px 0px 8px rgba(195, 0, 255, 0.678);
 
     .mosaic__square--icon,
     .icon {
@@ -148,8 +155,18 @@ onMounted(() => {
 
 .mosaic__input {
   position: fixed;
-  bottom: 1vw;
+  bottom: 18%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.keyboardComp {
+  background: rgba(255, 255, 255, 0.103);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  border-radius: 10px;
+  display: grid;
+  width: 100%;
 }
 </style>

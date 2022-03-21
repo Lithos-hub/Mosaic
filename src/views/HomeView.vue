@@ -22,15 +22,13 @@ export default {
 @import "../scss/variables";
 
 h1 {
-  width:  auto;
+  width: auto;
   position: absolute;
-  top: 1vw;
+  top: 0vw;
   left: 50%;
-  font-size: 3em;
   transform: translate(-50%, -50%);
-  background: $gradient_1;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 3em;
+  color: white;
+  text-shadow: 3px 3px 1px black;
 }
 </style>

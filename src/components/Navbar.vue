@@ -29,15 +29,9 @@ nav {
 
   .navbar__icon {
     transition: all 0.3s ease-out;
-    margin-block: 30vw;
+    margin-block: 10vw;
     cursor: pointer;
-    background: $gradient_1;
-    border-radius: 50%;
     padding: 5px;
-    box-shadow: 0px 0px 2px white, 0px 0px 5px pink, 0px 0px 10px magenta;
-    &:hover {
-      color: #151515;
-    }
   }
 
   a {

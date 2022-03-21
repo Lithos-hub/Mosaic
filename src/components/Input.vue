@@ -5,10 +5,11 @@
 <script setup>
 import { ref, defineProps } from 'vue';
 
-const answer = ref('');
 const props = defineProps({
   image: String,
+  model: String,
 });
+const answer = ref(props.model);
 
 const checkAnswer = () => {
   switch (props.image) {
