@@ -39,7 +39,7 @@ nav {
     color: white;
 
     &.router-link-exact-active {
-      color: black;
+      color: $mainDark;
     }
   }
 }

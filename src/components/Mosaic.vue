@@ -15,7 +15,18 @@
     :model="inputModel"
     :key="inputKey"
   />
-  <Keyboard class="keyboardComp" @write-key="writeKey" />
+  <button
+    :class="`mosaic__keyboard--button ${
+      showKeyboard ? 'keyboard__button--active' : 'keyboard__button--inactive'
+    }`"
+    @click="showKeyboard = !showKeyboard"
+  >
+    <mdicon name="keyboard" size="40" />
+  </button>
+  <Keyboard
+    :class="`keyboardComp ${showKeyboard ? 'showKeyboard' : 'hideKeyboard'}`"
+    @write-key="writeKey"
+  />
 </template>
 
 <script setup>
@@ -24,7 +35,7 @@ import Keyboard from './Keyboard.vue';
 import Input from './Input.vue';
 
 const inputKey = ref(1);
-
+const showKeyboard = ref(false);
 const images = ref([
   {
     path: '../img/1.jpg',
@@ -140,6 +151,7 @@ onMounted(() => {
 }
 
 .unlocked {
+  animation: flash 0.3s ease-in;
   transition: all 0.2s ease-in;
   background: transparent;
 }
@@ -159,14 +171,58 @@ onMounted(() => {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
-.keyboardComp {
-  background: rgba(255, 255, 255, 0.103);
+.mosaic__keyboard--button {
+  transition: all 0.3s ease-in;
+  cursor: pointer;
+  padding-inline: 20px;
+  background: white;
+  box-shadow: 0px 0px 10px $mainDark;
+  border: none;
+  border-radius: 10px;
   position: fixed;
-  bottom: 0;
-  left: 0;
+  bottom: 1vw;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  right: 0vw;
+}
+.keyboard__button--active {
+  transition: all 0.3s ease-in;
+  background: $mainDark;
+  color: white;
+}
+.keyboard__button--inactive {
+  transition: all 0.3s ease-in;
+  background: white;
+  color: $mainDark;
+}
+.keyboardComp {
+  transition: all 0.3s ease-in;
+  background: rgba(255, 255, 255, 0.103);
   border-radius: 10px;
   display: grid;
   width: 100%;
+}
+.showKeyboard {
+  transition: all 0.3s ease-in;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+.hideKeyboard {
+  transition: all 0.3s ease-in;
+  position: fixed;
+  bottom: -30em;
+  left: 0;
+}
+
+@keyframes flash {
+  0% {
+    background: white;
+    filter: brightness(2);
+  }
+  100% {
+    background: transparent;
+    filter: brightness(1);
+  }
 }
 </style>
