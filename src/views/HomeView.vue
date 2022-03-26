@@ -24,10 +24,12 @@ export default {
 h1 {
   width: auto;
   position: absolute;
-  top: 0vw;
+  top: 2.5vh;
   left: 50%;
+  text-transform: uppercase;
+  letter-spacing: 10px;
   transform: translate(-50%, -50%);
-  font-size: 3em;
+  font-size: 2em;
   color: white;
   text-shadow: 3px 3px 1px black;
 }

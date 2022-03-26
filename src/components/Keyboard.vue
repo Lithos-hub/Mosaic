@@ -66,12 +66,12 @@ const emitSend = () => {
 
 .keyboard__row {
   display: flexbox;
-  padding: 5px;
+  padding-block: 1px;
 }
 
 .keyboard__options {
   position: absolute;
-  right: 30vw;
+  right: 60vh;
   top: 50%;
   transform: translateY(-50%);
 }

@@ -24,18 +24,17 @@ const emitKey = (key) => {
 button {
     cursor: pointer;
     transition: all .3s ease-out;
-    padding: 10px;
-    font-size: 1.5em;
+    font-size: 0.8em;
     font-weight: bold;
     color: $mainDark;
     background: rgba(0, 0, 0, 0.253);
     border-radius: 5px;
     border: none;
-    margin: 2px;
-    width: 50px;
-    max-width: 50px;
-    height: 50px;
-    max-height: 50px;
+    margin-inline: 1px;
+    width: $keyboardLetterSizes;
+    max-width: $keyboardLetterSizes;
+    height: $keyboardLetterSizes;
+    max-height: $keyboardLetterSizes;
 
     &:hover {
         background: $mainDark;

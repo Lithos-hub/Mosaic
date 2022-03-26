@@ -1,6 +1,6 @@
 <template>
   <button class="keyboard__specialButton" @click="emitAction">
-    <mdicon :name="icon" size="40" />
+    <mdicon :name="icon" size="25" />
   </button>
 </template>
 
@@ -31,11 +31,11 @@ const emitAction = () => {
     background: rgba(0, 0, 0, 0.253);
     border-radius: 5px;
     border: none;
-    margin-block: 1em;
-    width: 50px;
-    max-width: 50px;
-    height: 50px;
-    max-height: 50px;
+    margin-block: 0.5em;
+    width: $keyboardLetterSizes;
+    max-width: $keyboardLetterSizes;
+    height: $keyboardLetterSizes;
+    max-height: $keyboardLetterSizes;
 
     &:hover {
         background: $mainDark;

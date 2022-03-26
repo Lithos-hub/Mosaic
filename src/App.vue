@@ -1,8 +1,10 @@
 <template>
+<div class="app__background">
   <Navbar class="navbar" />
   <div class="background__1"></div>
   <div class="background__2"></div>
   <router-view/>
+</div>
 </template>
 
 <script>
@@ -16,28 +18,31 @@ export default {
 </script>
 
 <style lang="scss">
-
+@import './scss/variables';
 body {
   // animation: backgroundColors 50s linear infinite alternate-reverse;
   height: 100%;
   width: 100%;
+  background: $mainDark;
 }
 
 .background__1 {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: -50%;
+  left: -50%;
+  width: 300%;
+  height: 500%;
   background: linear-gradient(50deg, #ffe96d 50%, #42b364 50%);
+  animation: rotate1 10s linear infinite;
 }
 .background__2 {
   position: fixed;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: -50%;
+  left: -50%;
+  width: 500%;
+  height: 300%;
   background: linear-gradient(120deg, #4fa2e6 50%, #f89f63 50%);
+  animation: rotate2 15s linear infinite;
 }
 
 #app {
@@ -73,4 +78,21 @@ body {
 //     background: #100111;
 //   }
 // }
+
+@keyframes rotate1 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotate2 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 </style>
