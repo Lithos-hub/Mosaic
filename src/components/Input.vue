@@ -1,29 +1,51 @@
 <template>
-  <input placeholder="Enter your answer" v-model="answer" @change="checkAnswer" />
+  <input placeholder="Enter your answer" v-model="answer" />
 </template>
 
-<script setup>
-import { ref, defineProps } from 'vue';
+<script>
+import {
+  ref, watch,
+} from 'vue';
 
-const props = defineProps({
-  image: String,
-  model: String,
-});
-const answer = ref(props.model);
+export default {
+  props: {
+    image: {
+      type: String,
+    },
+    model: {
+      type: String,
+    },
+    sending: {
+      type: Boolean,
+    },
+  },
+  name: 'inputComp',
+  setup(props) {
+    const answer = ref(props.model);
 
-const checkAnswer = () => {
-  switch (props.image) {
-    case '../img/1.jpg':
-      if (answer.value.toLowerCase() === 'dog') {
-        alert('Correct!');
-      } else {
-        alert('Wrong!');
+    const checkAnswer = () => {
+      switch (props.image) {
+        case '../img/1.jpg':
+          if (answer.value.toLowerCase() === 'dog') {
+            alert('Correct!');
+          } else {
+            alert('Wrong!');
+          }
+          break;
+        default:
+          break;
       }
-      break;
-    default:
-      break;
-  }
+    };
+
+    watch(() => props.sending, (newVal) => {
+      if (newVal) {
+        checkAnswer();
+      }
+    });
+  },
+
 };
+
 </script>
 
 <style lang="scss" scoped>

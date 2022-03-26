@@ -13,6 +13,7 @@
     class="mosaic__input"
     :image="images[randomNumber].path"
     :model="inputModel"
+    :sending="isSendingAnswer"
     :key="inputKey"
   />
   <button
@@ -26,6 +27,8 @@
   <Keyboard
     :class="`keyboardComp ${showKeyboard ? 'showKeyboard' : 'hideKeyboard'}`"
     @write-key="writeKey"
+    @backspace="backspace"
+    @send="send"
   />
 </template>
 
@@ -44,6 +47,7 @@ const images = ref([
     path: '../img/2.jpg',
   },
 ]);
+const isSendingAnswer = ref(false);
 const inputModel = ref('');
 const randomNumber = Math.floor(Math.random() * images.value.length);
 const listenClick = () => {
@@ -59,6 +63,20 @@ const listenClick = () => {
 const writeKey = (key) => {
   inputModel.value += key;
   inputKey.value += 1;
+};
+const backspace = () => {
+  const firstValue = inputModel.value;
+  const newValue = firstValue.substring(0, firstValue.length - 1);
+  inputModel.value = newValue;
+  inputKey.value += 1;
+};
+const send = () => {
+  console.log('Changing sending boolean from ', isSendingAnswer.value);
+  isSendingAnswer.value = true;
+  console.log('To...', isSendingAnswer.value);
+  setTimeout(() => {
+    isSendingAnswer.value = false;
+  });
 };
 onMounted(() => {
   listenClick();

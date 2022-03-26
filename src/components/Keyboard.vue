@@ -27,12 +27,8 @@
     </div>
     </div>
     <div class="keyboard__options">
-      <button class="keyboard__backspace--btn">
-        <mdicon name="close-box" size="40" />
-      </button>
-      <button class="keyboard__send--btn">
-        <mdicon name="send" size="40" />
-      </button>
+      <KeyboardButtonSpecial :action="'backspace'" @backspace="emitBackspace" :icon="'close-box'" />
+      <KeyboardButtonSpecial :action="'send'" @send="emitSend" :icon="'send'" />
     </div>
   </div>
 </template>
@@ -40,8 +36,9 @@
 <script setup>
 import { ref, defineEmits } from 'vue';
 import KeyboardButton from './KeyboardButton.vue';
+import KeyboardButtonSpecial from './KeyboardButtonSpecial.vue';
 
-const emit = defineEmits(['writeKey']);
+const emit = defineEmits(['writeKey', 'backspace', 'send']);
 
 const KEYS_1 = ref('QWERTYUIOP');
 const KEYS_2 = ref('ASDFGHJKLÑ');
@@ -53,6 +50,15 @@ const keyboardKeys3 = KEYS_3.value.split('');
 const emitKey = (key) => {
   emit('writeKey', key);
 };
+
+const emitBackspace = () => {
+  emit('backspace');
+};
+
+const emitSend = () => {
+  emit('send');
+};
+
 </script>
 
 <style lang="scss" scoped>
@@ -68,26 +74,5 @@ const emitKey = (key) => {
   right: 30vw;
   top: 50%;
   transform: translateY(-50%);
-}
-
-.keyboard__backspace--btn, .keyboard__send--btn {
-    display: block;
-    cursor: pointer;
-    transition: all .3s ease-out;
-    font-weight: bold;
-    color: $mainDark;
-    background: rgba(0, 0, 0, 0.253);
-    border-radius: 5px;
-    border: none;
-    margin-block: 1em;
-    width: 50px;
-    max-width: 50px;
-    height: 50px;
-    max-height: 50px;
-
-    &:hover {
-        background: $mainDark;
-        color: white;
-    }
 }
 </style>
