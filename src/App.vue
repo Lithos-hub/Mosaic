@@ -9,10 +9,32 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue';
+import { onMounted } from 'vue';
 
 export default {
   components: {
     Navbar,
+  },
+  setup() {
+    const listenClickOutsideOptions = () => {
+      document.addEventListener('click', ({ target }) => {
+        const OPTIONS_COMP = document.querySelector('.mosaicOptions--comp');
+        const OPTIONS_BTN = document.querySelector('.mosaicOptions--btn');
+        if (!OPTIONS_COMP.contains(target) && !OPTIONS_BTN.contains(target)) {
+          OPTIONS_COMP.style.transition = 'all .5s ease-in';
+          OPTIONS_COMP.style.height = 0;
+          OPTIONS_COMP.style.opacity = 0;
+        }
+      });
+    };
+
+    onMounted(() => {
+      listenClickOutsideOptions();
+    });
+
+    return {
+      listenClickOutsideOptions,
+    };
   },
 };
 </script>
@@ -55,29 +77,13 @@ body {
 
 .navbar {
   position: fixed;
-  right: 0;
+  right: 5vh;
   top: 50%;
+  padding: 0;
+  max-width: 25px;
   transform: translateY(-50%);
-  z-index: 99999;
+  z-index: 99;
 }
-
-// @keyframes backgroundColors {
-//   0% {
-//     background: #1b0417;
-//   }
-//   25% {
-//     background: #0c0311;
-//   }
-//   50% {
-//     background: #011612;
-//   }
-//   75% {
-//     background: #150516;
-//   }
-//   100% {
-//     background: #100111;
-//   }
-// }
 
 @keyframes rotate1 {
   from {

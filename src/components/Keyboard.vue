@@ -71,8 +71,8 @@ const emitSend = () => {
 
 .keyboard__options {
   position: absolute;
-  right: 60vh;
+  left: 70%;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
 }
 </style>

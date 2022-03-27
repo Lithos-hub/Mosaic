@@ -3,7 +3,7 @@
   <div class="mosaicComp">
     <img :src="images[randomNumber].path" alt="image" class="img" />
     <div class="mosaic__wrapper">
-      <div class="mosaic__square mosaic__square--hover locked" v-for="i in 36" :key="i">
+      <div class="mosaic__square mosaic__square--hover locked" v-for="i in numSquares" :key="i">
         <div class="mosaic__square--icon">
           <mdicon class="icon" name="eye" size="30" />
         </div>
@@ -35,73 +35,104 @@
   />
 </template>
 
-<script setup>
+<script>
 import { onMounted, ref } from 'vue';
+import { useStore } from 'vuex';
 import Keyboard from './Keyboard.vue';
 import CheckingDialog from './CheckingDialog.vue';
 import Input from './Input.vue';
 
-const inputKey = ref(1);
-const showKeyboard = ref(false);
-const isCorrectAnswer = ref(false);
-const isCheckingAnswer = ref(false);
-const images = ref([
-  {
-    path: '../img/1.jpg',
+export default {
+  name: 'MosaicComp',
+  components: {
+    Keyboard,
+    CheckingDialog,
+    Input,
   },
-  {
-    path: '../img/2.jpg',
-  },
-]);
-const isSendingAnswer = ref(false);
-const inputModel = ref('');
-const randomNumber = Math.floor(Math.random() * images.value.length);
-const listenClick = () => {
-  const squares = document.querySelectorAll('.mosaic__square');
-  squares.forEach((square) => {
-    square.addEventListener('click', () => {
-      square.classList.remove('locked');
-      square.classList.remove('mosaic__square--hover');
-      square.classList.add('unlocked');
+  setup() {
+    const store = useStore();
+
+    const { numSquares } = store.getters;
+    const inputKey = ref(1);
+    const showKeyboard = ref(false);
+    const isCorrectAnswer = ref(false);
+    const isCheckingAnswer = ref(false);
+    const images = ref([
+      // {
+      //   path: '../img/1.jpg',
+      // },
+      {
+        path: '../img/2.jpg',
+      },
+    ]);
+    const isSendingAnswer = ref(false);
+    const inputModel = ref('');
+    const randomNumber = Math.floor(Math.random() * images.value.length);
+    const listenClick = () => {
+      const squares = document.querySelectorAll('.mosaic__square');
+      squares.forEach((square) => {
+        square.addEventListener('click', () => {
+          square.classList.remove('locked');
+          square.classList.remove('mosaic__square--hover');
+          square.classList.add('unlocked');
+        });
+      });
+    };
+    const writeKey = (key) => {
+      inputModel.value += key;
+      inputKey.value += 1;
+    };
+    const backspace = () => {
+      const firstValue = inputModel.value;
+      const newValue = firstValue.substring(0, firstValue.length - 1);
+      inputModel.value = newValue;
+      inputKey.value += 1;
+    };
+    const send = () => {
+      console.log('Sending!');
+      isSendingAnswer.value = true;
+      setTimeout(() => {
+        isSendingAnswer.value = false;
+      }, 1000);
+    };
+    const correctAnswer = () => {
+      console.log('Correct!');
+      isCheckingAnswer.value = true;
+      isCorrectAnswer.value = true;
+      setTimeout(() => {
+        isCheckingAnswer.value = false;
+      }, 2000);
+    };
+    const wrongAnswer = () => {
+      console.log('Wrong!');
+      isCheckingAnswer.value = true;
+      isCorrectAnswer.value = false;
+      setTimeout(() => {
+        isCheckingAnswer.value = false;
+      }, 2000);
+    };
+    onMounted(() => {
+      listenClick();
     });
-  });
+
+    return {
+      numSquares,
+      showKeyboard,
+      randomNumber,
+      writeKey,
+      backspace,
+      send,
+      correctAnswer,
+      wrongAnswer,
+      listenClick,
+      isCorrectAnswer,
+      isCheckingAnswer,
+      isSendingAnswer,
+      images,
+    };
+  },
 };
-const writeKey = (key) => {
-  inputModel.value += key;
-  inputKey.value += 1;
-};
-const backspace = () => {
-  const firstValue = inputModel.value;
-  const newValue = firstValue.substring(0, firstValue.length - 1);
-  inputModel.value = newValue;
-  inputKey.value += 1;
-};
-const send = () => {
-  console.log('Sending!');
-  isSendingAnswer.value = true;
-  setTimeout(() => {
-    isSendingAnswer.value = false;
-  }, 1000);
-};
-const correctAnswer = () => {
-  console.log('Correct!');
-  isCheckingAnswer.value = true;
-  isCorrectAnswer.value = true;
-  setTimeout(() => {
-    isCheckingAnswer.value = false;
-  }, 2000);
-};
-const wrongAnswer = () => {
-  console.log('Wrong!');
-  isCheckingAnswer.value = true;
-  isCorrectAnswer.value = false;
-  setTimeout(() => {
-    isCheckingAnswer.value = false;
-  }, 2000);
-};
-onMounted(() => {
-  listenClick();
-});
+
 </script>
 
 <style lang="scss" scoped>
@@ -215,12 +246,12 @@ onMounted(() => {
   background: white;
   box-shadow: 0px 0px 10px $mainDark;
   border: none;
-  border-radius: 10px;
+  border-radius: 2px;
   position: absolute;
   bottom: 5vh;
   transform: translate(-50%, -50%);
   z-index: 9999;
-  right: 15vh;
+  right: 0vh;
 }
 .keyboard__button--active {
   transition: all 0.3s ease-in;
