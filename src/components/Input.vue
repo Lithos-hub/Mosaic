@@ -1,5 +1,5 @@
 <template>
-  <input placeholder="Enter your answer" v-model="answer" />
+  <input placeholder="Enter your answer" v-model="answer" @change="checkAnswer" />
 </template>
 
 <script>
@@ -73,7 +73,7 @@ input {
   height: 40px;
   max-width: $mosaicSide;
   padding: 10px;
-  border-radius: 0px 0px 25px 25px;
+  border-radius: 0px 0px 10px 10px;
   border: none;
   text-align: center;
   text-transform: uppercase;

@@ -234,7 +234,7 @@ export default {
 
 .mosaic__input {
   position: absolute;
-  top: 55vh;
+  top: 54vh;
   left: 50%;
   transform: translate(-50%, -50%);
 }

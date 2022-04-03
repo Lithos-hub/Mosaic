@@ -55,7 +55,7 @@ body {
   width: 300%;
   height: 500%;
   background: linear-gradient(50deg, #ffe96d 50%, #42b364 50%);
-  animation: rotate1 10s linear infinite;
+  animation: rotate1 20s linear infinite;
 }
 .background__2 {
   position: fixed;
@@ -64,7 +64,7 @@ body {
   width: 500%;
   height: 300%;
   background: linear-gradient(120deg, #4fa2e6 50%, #f89f63 50%);
-  animation: rotate2 15s linear infinite;
+  animation: rotate2 30s linear infinite;
 }
 
 #app {

@@ -65,11 +65,13 @@ nav {
 .languageMenu__icon {
   transition: all .3s ease-out;
   cursor: pointer;
+  position: relative;
 
   &:hover {
     .languageMenu__wrapper {
       opacity: 1;
     }
+    color: white;
   }
 }
 
@@ -80,32 +82,40 @@ nav {
   background: none;
 }
 .languageMenu__wrapper {
+  position: absolute;
+  top: -3vh;
+  left: -5vh;
+  width: 10vh;
   transition: all .3s ease-out;
-  opacity: 1;
-  padding: 0;
+  opacity: 0;
+  padding-left: 10px;
   display: block;
-  width: 100%;
   border-radius: 5%;
-  background: rgba(255, 255, 255, 0.295);
+  background: none;
   box-shadow: 0px 0px 5px black 0px 0px 10px #151515;
+  border-radius: 25px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.322);
+  }
   .languageMenu__btn {
     display: block;
     transition: all .3s ease-out;
     cursor: pointer;
     border: none;
-    color: $mainDark;
-    border-radius: 5px;
+    background: $mainDark;
+    color: beige;
+    border-radius: 20px;
     padding: 10px;
     font-size: 14px;
-    margin: 0 auto;
+    margin-block: 1vh;
     font-weight: bold;
     border-inline: 1px solid $mainDark;
 
     &:hover {
       border-radius: 20px;
-      background: $mainDark;
-      text-shadow: 2px 1px 1px black;
-      color: beige;
+      background: white;
+      color: $mainDark;
     }
 
     &:focus {
