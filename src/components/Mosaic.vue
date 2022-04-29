@@ -1,22 +1,22 @@
 <template>
   <CheckingDialog v-if="isCheckingAnswer" :success="isCorrectAnswer" />
   <div class="mosaicComp">
-    <img :src="images[randomNumber].path" alt="image" class="img" />
+    <img :src="generateImage()" alt="image" class="img" />
     <div class="mosaic__wrapper">
       <div class="mosaic__square mosaic__square--hover locked" v-for="i in numSquares" :key="i">
         <div class="mosaic__square--icon">
           <mdicon class="icon" name="eye" size="30" />
         </div>
       </div>
-  <Input
-    class="mosaic__input"
-    :image="images[randomNumber].path"
-    :model="inputModel"
-    :sending="isSendingAnswer"
-    :key="inputKey"
-    @correct-answer="correctAnswer"
-    @wrong-answer="wrongAnswer"
-  />
+      <Input
+        class="mosaic__input"
+        :image="generateImage()"
+        :model="inputModel"
+        :sending="isSendingAnswer"
+        :key="inputKey"
+        @correct-answer="correctAnswer"
+        @wrong-answer="wrongAnswer"
+      />
     </div>
   </div>
   <button
@@ -35,103 +35,76 @@
   />
 </template>
 
-<script>
+<script setup>
 import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import Keyboard from './Keyboard.vue';
 import CheckingDialog from './CheckingDialog.vue';
 import Input from './Input.vue';
 
-export default {
-  name: 'MosaicComp',
-  components: {
-    Keyboard,
-    CheckingDialog,
-    Input,
-  },
-  setup() {
-    const store = useStore();
+// DATA:
+const store = useStore();
+const { numSquares } = store.getters;
+const inputKey = ref(1);
+const showKeyboard = ref(false);
+const isCorrectAnswer = ref(false);
+const isCheckingAnswer = ref(false);
+const isSendingAnswer = ref(false);
+const inputModel = ref('');
 
-    const { numSquares } = store.getters;
-    const inputKey = ref(1);
-    const showKeyboard = ref(false);
-    const isCorrectAnswer = ref(false);
-    const isCheckingAnswer = ref(false);
-    const images = ref([
-      // {
-      //   path: '../img/1.jpg',
-      // },
-      {
-        path: '../img/2.jpg',
-      },
-    ]);
-    const isSendingAnswer = ref(false);
-    const inputModel = ref('');
-    const randomNumber = Math.floor(Math.random() * images.value.length);
-    const listenClick = () => {
-      const squares = document.querySelectorAll('.mosaic__square');
-      squares.forEach((square) => {
-        square.addEventListener('click', () => {
-          square.classList.remove('locked');
-          square.classList.remove('mosaic__square--hover');
-          square.classList.add('unlocked');
-        });
-      });
-    };
-    const writeKey = (key) => {
-      inputModel.value += key;
-      inputKey.value += 1;
-    };
-    const backspace = () => {
-      const firstValue = inputModel.value;
-      const newValue = firstValue.substring(0, firstValue.length - 1);
-      inputModel.value = newValue;
-      inputKey.value += 1;
-    };
-    const send = () => {
-      console.log('Sending!');
-      isSendingAnswer.value = true;
-      setTimeout(() => {
-        isSendingAnswer.value = false;
-      }, 1000);
-    };
-    const correctAnswer = () => {
-      console.log('Correct!');
-      isCheckingAnswer.value = true;
-      isCorrectAnswer.value = true;
-      setTimeout(() => {
-        isCheckingAnswer.value = false;
-      }, 2000);
-    };
-    const wrongAnswer = () => {
-      console.log('Wrong!');
-      isCheckingAnswer.value = true;
-      isCorrectAnswer.value = false;
-      setTimeout(() => {
-        isCheckingAnswer.value = false;
-      }, 2000);
-    };
-    onMounted(() => {
-      listenClick();
-    });
-
-    return {
-      numSquares,
-      showKeyboard,
-      randomNumber,
-      writeKey,
-      backspace,
-      send,
-      correctAnswer,
-      wrongAnswer,
-      listenClick,
-      isCorrectAnswer,
-      isCheckingAnswer,
-      isSendingAnswer,
-      images,
-    };
-  },
+// METHODS:
+const generateImage = () => {
+  const num = Math.floor(Math.random() * 2) + 1;
+  const PATH = `../img/${num}.jpg`;
+  return PATH;
 };
+const listenClick = () => {
+  const squares = document.querySelectorAll('.mosaic__square');
+  squares.forEach((square) => {
+    square.addEventListener('click', () => {
+      square.classList.remove('locked');
+      square.classList.remove('mosaic__square--hover');
+      square.classList.add('unlocked');
+    });
+  });
+};
+const writeKey = (key) => {
+  inputModel.value += key;
+  inputKey.value += 1;
+};
+const backspace = () => {
+  const firstValue = inputModel.value;
+  const newValue = firstValue.substring(0, firstValue.length - 1);
+  inputModel.value = newValue;
+  inputKey.value += 1;
+};
+const send = () => {
+  console.log('Sending!');
+  isSendingAnswer.value = true;
+  setTimeout(() => {
+    isSendingAnswer.value = false;
+  }, 1000);
+};
+const correctAnswer = () => {
+  console.log('Correct!');
+  isCheckingAnswer.value = true;
+  isCorrectAnswer.value = true;
+  setTimeout(() => {
+    isCheckingAnswer.value = false;
+  }, 2000);
+};
+const wrongAnswer = () => {
+  console.log('Wrong!');
+  isCheckingAnswer.value = true;
+  isCorrectAnswer.value = false;
+  setTimeout(() => {
+    isCheckingAnswer.value = false;
+  }, 2000);
+};
+// LIFE CYCLE:
+onMounted(() => {
+  listenClick();
+});
 
 </script>
 

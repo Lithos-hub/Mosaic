@@ -27,3 +27,17 @@
     box-shadow: 0px 0px 10px $mainDark;
     color: $mainDark;
 }
+
+.container {
+    position: relative;
+    background-color: red;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    margin-inline: 10vh;
+    margin-block: 5vh;
+}
+
+.text-center {
+    text-align: center;
+}

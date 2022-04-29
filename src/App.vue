@@ -1,6 +1,6 @@
 <template>
 <div class="app__background">
-  <Navbar class="navbar" />
+  <Navbar class="navbar" v-if="this.$route.path !== '/'"/>
   <div class="background__1"></div>
   <div class="background__2"></div>
   <router-view/>
